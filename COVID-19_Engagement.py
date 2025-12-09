@@ -14,7 +14,7 @@ df = load_data()
 df["date"] = pd.to_datetime(df["date"])
 
 st.title("Shifts in COVID-19 Global Public Interest")
-st.write("How has public interest in COVID-19 shifted during the post-pandemic period, as reflected in Wikipedia pageviews from 2023–2024?")
+st.write("How has public engagement in COVID-19 shifted during the post-pandemic period, as reflected in Wikipedia pageviews from 2023–2024?")
 
 # --------------------------
 # 1. Total Pageviews Over Time
