@@ -14,16 +14,31 @@ df = load_data()
 df["date"] = pd.to_datetime(df["date"])
 
 st.title("Shifts in COVID-19 Global Public Interest")
-st.write("How has public engagement in COVID-19 shifted during the post-pandemic period, as reflected in Wikipedia pageviews from 2023–2024?")
+st.write("**How has public engagement in COVID-19 shifted during the post-pandemic period, as reflected in Wikipedia pageviews from 2023–2024, and what do these trends suggest about public engagement in 2025?**")
+
+st.write("This dashboard explores how interest in COVID-19 evolved since the height of the pandemic. By using Wikipedia pageviews as a proxy of engagement for COVID-19-related" \
+" articles from 2023 to 2024, we can measure popularity and interest within this topic over time. This analysis can help us understand whether public attention to COVID-19 has , " \
+"retained, or shifted to specific aspects of the pandemic in the post-pandemic period.")
+
+st.write("Through this analysis, I expect to find that overall public interest in COVID-19 has declined over time, but that certain topics within the broader COVID-19 context (e.g., vaccine, misinformation, government) still have maintained interest.")
+
+# --------------------------
+# Data Summary
+# --------------------------
+st.subheader("Data Summary")
+st.write("The dataset consists of articles from the WikiProject COVID-19 Wikipedia page with their respective pageviews from 02-06-2023 to 12-31-2024. Only articles with top, high, and medium importance levels were included for relevancy. QIDs were matched with all Wikipedia data to get global pageviews.")
+st.write("Preview of the data:")
+st.dataframe(df.head())
+st.write(f"Total Articles: {df['article'].count():,}")
+st.write(f"Total Pageviews (All Years): {df['pageviews'].sum():,}")
+st.write(f"Average Pageviews: {df['pageviews'].mean():.2f}")
 
 # --------------------------
 # 1. Total Pageviews Over Time
 # --------------------------
 st.subheader("Total COVID-19 Pageviews Over Time")
 
-# --------------------------
 # Date range slider
-# --------------------------
 min_date = df["date"].min().to_pydatetime()
 max_date = df["date"].max().to_pydatetime()
 
@@ -80,7 +95,7 @@ top_articles = (
 
 bar = alt.Chart(top_articles).mark_bar().encode(
     x=alt.X("pageviews:Q", title="Total Pageviews"),
-    y=alt.Y("article:N", sort='-x', title="Article"),
+    y=alt.Y("article:N", sort='-x', title="Article", axis=alt.Axis(labelLimit=300)),
 ).properties(height=500)
 
 st.altair_chart(bar, use_container_width=True)
